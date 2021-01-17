@@ -1,21 +1,28 @@
-class Negociacao {
+import { MeuObjeto } from './MeuObjeto'
+export class Negociacao implements MeuObjeto<Negociacao> {
     
-    //_ por convenção indica que as variáveis não podem ser alteradas fora dos métodos da classe
-    constructor(private _data: Date, private _quantidade: number, private _valor: number) {}
-
-    get data() {
-        return this._data;
-    }
-
-    get quantidade() {
-        return this._quantidade
-    }
-
-    get valor() {
-        return this._valor
-    }
+    //_variable por convenção indica que as variáveis não podem ser alteradas fora dos métodos da classe
+    // posso substituir o private e o get por readonly
+    constructor(readonly data: Date, readonly quantidade: number, readonly valor: number) {}
 
     get volume() {
-        return this._quantidade * this._valor
+        return this.quantidade * this.valor
+    }
+
+    paraTexto(): void {
+        console.log(
+            `
+                Data: ${this.data},
+                Quantidade: ${this.quantidade},
+                Valor: ${this.valor},
+                Volume: ${this.volume}
+            `
+        )
+    }
+
+    ehIgual(negociacao: Negociacao): boolean {
+        return this.data.getDate() == negociacao.data.getDate() 
+            && this.data.getMonth() == negociacao.data.getMonth()
+            && this.data.getFullYear() == negociacao.data.getFullYear()
     }
 }
